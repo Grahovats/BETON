@@ -16,7 +16,6 @@ body {
     #040404 55%,
     #000 100%
   );
-  font-family: Arial, sans-serif;
 }
 
 .mobile-root {
@@ -367,12 +366,13 @@ body {
   background: rgba(0, 0, 0, 0.82);
   color: #fff;
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
   height: 36px;
-  padding: 0 12px;
+  padding: 0 12px 0 14px;
   display: inline-flex;
   align-items: center;
+  justify-content: flex-start;
   pointer-events: auto;
 }
 
@@ -421,6 +421,11 @@ body {
 
 .trend-yes {
   color: #fff;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
 }
 
 .trend-value.down {
@@ -431,6 +436,10 @@ body {
   color: #1dcf5a;
 }
 
+.trend-value {
+  font-size: 14px;
+}
+
 .price-row {
   display: flex;
   gap: 10px;
@@ -439,22 +448,78 @@ body {
 
 .price-btn {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   border: 0;
   border-radius: 16px;
-  padding: 11px 8px;
+  padding: 11px 10px;
   color: #fff;
-  font-size: clamp(20px, 5.8vw, 26px);
-  font-weight: 900;
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: 0em;
+  line-height: 1;
   cursor: pointer;
   pointer-events: auto;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.price-content {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+}
+
+.price-value {
+  display: inline-flex;
+  align-items: center;
+  gap: -1px;
+  white-space: nowrap;
+  margin-right: 5px;
+}
+
+.price-side-label {
+  font-size: 0.76em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.side-icon-svg,
+.coin-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.side-icon-svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.coin-icon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: middle;
+  transform: translateY(-1px);
+  margin-left: -2px;
 }
 
 .price-btn.yes {
-  background: #0cac24;
+  background: rgba(0, 255, 38, 0.473);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .price-btn.no {
-  background: #d90404;
+  background: rgba(255, 0, 0, 0.356);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .price-btn.selected {

@@ -42,8 +42,8 @@ const FEED_ITEMS: FeedItem[] = [
       trendPath:
         "M1 10C5 10 8 3 13 3C18 3 20 11 25 11C30 11 33 5 37 5C40 5 41 7 43 7",
       trendColor: "#ff2f2f",
-      yesPrice: "YES 7.4¢",
-      noPrice: "NO 92.6¢",
+      yesPrice: "7.4",
+      noPrice: "92.6",
     },
   },
   {
@@ -60,12 +60,12 @@ const FEED_ITEMS: FeedItem[] = [
       shares: 1100,
     },
     odds: {
-      trend: "64%",
+      trend: "64.2%",
       trendPath:
         "M1 12C6 12 9 9 13 9C18 9 20 7 25 7C29 7 31 2 36 2C39 2 41 4 43 4",
       trendColor: "#1dcf5a",
-      yesPrice: "YES 64¢",
-      noPrice: "NO 38¢",
+      yesPrice: "64.2",
+      noPrice: "35.8",
     },
   },
   {
@@ -82,12 +82,12 @@ const FEED_ITEMS: FeedItem[] = [
       shares: 1950,
     },
     odds: {
-      trend: "44%",
+      trend: "44.7%",
       trendPath:
         "M1 5C5 5 8 8 12 8C17 8 20 4 24 4C29 4 31 11 35 11C39 11 41 9 43 9",
       trendColor: "#f5b342",
-      yesPrice: "YES 44¢",
-      noPrice: "NO 56¢",
+      yesPrice: "44.7",
+      noPrice: "55.3",
     },
   },
 ];
@@ -139,13 +139,28 @@ const SaveIcon = () => (
   </svg>
 );
 
+const CentIcon = () => (
+  <svg viewBox="0 0 24 24" className="coin-icon" aria-hidden="true">
+    <rect x="10.7" y="2" width="2.6" height="20" rx="1.1" />
+    <path
+      d="M17.1 7.2a6.6 6.6 0 1 0 0 9.6"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 const formatEngagement = (value: number) => {
   if (value < 1000) {
     return String(value);
   }
 
   const thousands = value / 1000;
-  const rounded = thousands >= 10 ? Math.round(thousands) : Math.round(thousands * 10) / 10;
+  const rounded =
+    thousands >= 10 ? Math.round(thousands) : Math.round(thousands * 10) / 10;
   return `${rounded}K`;
 };
 
@@ -286,6 +301,7 @@ function App() {
                 <button
                   type="button"
                   className={`price-btn yes ${selectedSide[activeItem.id] === "yes" ? "selected" : ""}`}
+                  aria-label={`Yes ${activeItem.odds.yesPrice} cents`}
                   onClick={() =>
                     setSelectedSide((prev) => ({
                       ...prev,
@@ -293,11 +309,18 @@ function App() {
                     }))
                   }
                 >
-                  {activeItem.odds.yesPrice}
+                  <span className="price-content">
+                    <span className="price-side-label">YES</span>
+                    <span className="price-value">
+                      <span>{activeItem.odds.yesPrice}</span>
+                      <CentIcon />
+                    </span>
+                  </span>
                 </button>
                 <button
                   type="button"
                   className={`price-btn no ${selectedSide[activeItem.id] === "no" ? "selected" : ""}`}
+                  aria-label={`No ${activeItem.odds.noPrice} cents`}
                   onClick={() =>
                     setSelectedSide((prev) => ({
                       ...prev,
@@ -305,7 +328,13 @@ function App() {
                     }))
                   }
                 >
-                  {activeItem.odds.noPrice}
+                  <span className="price-content">
+                    <span className="price-side-label">NO</span>
+                    <span className="price-value">
+                      <span>{activeItem.odds.noPrice}</span>
+                      <CentIcon />
+                    </span>
+                  </span>
                 </button>
               </div>
             </div>
