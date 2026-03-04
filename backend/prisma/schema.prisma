@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String            @id @default(cuid())
+  email          String            @unique
+  passwordHash   String
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  accounts       ConnectedAccount[]
+}
+
+model ConnectedAccount {
+  id                String            @id @default(cuid())
+  userId            String
+  platform          String            @default("onlyfans")
+  username          String
+  encryptedToken    String
+  encryptedPassword String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  snapshots         AccountSnapshot[]
+  transactions      Transaction[]
+
+  @@index([userId])
+}
+
+model AccountSnapshot {
+  id                String   @id @default(cuid())
+  accountId          String
+  fetchedAt          DateTime @default(now())
+  totalEarnings      Float
+  activeSubscribers  Int
+  messagesCount      Int
+  revenueThisMonth   Float
+  account            ConnectedAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([accountId, fetchedAt])
+}
+
+model Transaction {
+  id            String   @id @default(cuid())
+  accountId     String
+  externalId    String
+  amount        Float
+  currency      String
+  description   String
+  status        String
+  createdAt     DateTime
+  fetchedAt     DateTime @default(now())
+  account       ConnectedAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@unique([accountId, externalId])
+  @@index([accountId, createdAt])
+}
